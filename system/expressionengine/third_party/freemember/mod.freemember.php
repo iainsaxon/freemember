@@ -358,7 +358,11 @@ class Freemember
     protected function _build_form($action, $extra_hidden = array())
     {
         $data = array();
-        $data['action'] = ee()->functions->create_url(ee()->uri->uri_string);
+        if (ee()->TMPL->fetch_param('form_action')) {
+            $data['action'] = ee()->functions->create_url(ee()->TMPL->fetch_param('form_action'));
+        } else {
+            $data['action'] = ee()->functions->create_url(ee()->uri->uri_string);
+        }
 
         if (ee()->TMPL->fetch_param('secure_action') == 'yes') {
             $data['action'] = str_replace('http://', 'https://', $data['action']);
